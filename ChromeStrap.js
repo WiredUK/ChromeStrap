@@ -5,9 +5,11 @@ $popup = '<div id="bs-bp-notify" style="display: none;">'+
             '</span>'+
          '</div>';
 $style = '<style>'+
-             '#bs-bp-notify{position:fixed;bottom:0;right:0;margin:20px;padding:15px;padding-top:5px;padding-bottom:5px;color:#000000;background-color:#cccccc;border:1px solid #777777;border-radius:5px;text-align:left;font-family:monospace;font-size:12px;z-index:10000;}'+
-             '.bs-bp-dismiss>a{text-align:right;display:block;float:right;margin-right:-10px;margin-top:-5px;cursor:pointer;}'+
-             'a.info{vertical-align:super;font-size:9px;}'+
+             '#bs-bp-notify{position:fixed;bottom:0;right:0;margin:20px;padding:15px;padding-top:5px;padding-bottom:5px;color:#000000;background-color:#cccccc;border:1px solid #777777;border-radius:5px;text-align:left;font-family:monospace;font-size:12px;z-index:10000;box-shadow: -5px -5px 10px #777777;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default;}'+
+             '.bs-bp-dismiss>a{text-align:right;display:block;float:right;margin-right:-10px;margin-top:-5px;cursor:pointer;color:black;font-weight:700;}'+
+             '.bs-bp-dismiss>a:hover{text-decoration:none;}'+
+             '.bs-bp-message a.info{vertical-align:super;font-size:9px;cursor:help;}'+
+             '.bs-bp-message strong{font-weight:bold;}'+
          '</style>';
  
 $('body').append($popup);
@@ -20,15 +22,21 @@ $(window).resize(function() {
     var bp = findBootstrapEnvironment();
     var range = getBootstrapRange(bp);
     clearTimeout(timeout);
-    $('#bs-bp-notify .bs-bp-message').html('<div><strong>W:</strong> '+spec.width+'px</div>'+
-                                           '<div><strong>H:</strong> '+spec.height+'px</div>'+
-                                           '<div><strong>Break:</strong> '+bp+'</div>'+
-                                           '<div><strong>Range<a class="info" title="Assuming default Bootstrap settings">?</a>:</strong> '+range.min+'px - '+range.max+'px</div>');
+
+    var message = '<div><strong>W:</strong> '+spec.width+'px</div>'+
+                  '<div><strong>H:</strong> '+spec.height+'px</div>'+
+                  '<div><strong>Break:</strong> '+bp+'</div>';
+
+    if(range!=null) {
+    	message = message+'<div><strong>Range<a class="info" title="Assuming default Bootstrap settings">?</a>:</strong> '+range.min+'px - '+range.max+'px</div>';
+    }
+
+    $('#bs-bp-notify .bs-bp-message').html(message);
     $('#bs-bp-notify').stop().fadeIn("fast");
     timeout = setTimeout(function() { $('#bs-bp-notify').stop().fadeOut("fast"); }, 2000);
 });
  
-$(".bs-bp-dismiss").click(function() {
+$(".bs-bp-dismiss a").click(function() {
     $("#bs-bp-notify").stop().fadeOut("fast");
 });
 
