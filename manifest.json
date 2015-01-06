@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+
+  "name": "ChromeStrap",
+  "description": "Displays a popup window showing the current Bootstrap breakpoint when resizing your browser window",
+  "version": "0.9",
+
+  "browser_action": {
+    "default_icon": "ChromeStrap.png"
+  },
+
+  "content_scripts": [ {
+    "js": [ "jquery.min.js", "ChromeStrap.js" ],
+    "matches": [ "http://*/*", "https://*/*"]
+  }],
+
+  "permissions": [
+    "http://*/"
+  ]
+}
