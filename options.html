@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ChromeStrap Options</title>
+	<style>
+		body {
+			font-family: Arial;
+			margin: 0;
+		}
+
+		.title {
+			padding: 20px;
+			background-color: #cccccc;
+		}
+		.options {
+			margin: 20px;
+		}
+
+		.options>div {
+			margin: 20px;
+		}
+
+		.options-enable {
+			padding-bottom: 20px;
+			border-bottom: 1px solid #cccccc;
+		}
+
+		#showtype {
+			width: 100%;
+		}
+
+		#sitelist {
+			width: 100%;
+		}
+
+		#newsite {
+			width: 50%;
+		}
+
+		.right {
+			text-align: right;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="title">
+		<h1>ChromeStrap Options</h1>
+	</div>
+
+	<div class="options">
+		<div class="options-enable">
+			<input id="enabled" type="checkbox">
+			<label for="enabled">Enable ChromeStrap</label>
+		</div>
+
+		<div>
+			<select id="showtype">
+				<option value="0">Only show on the sites below</option>
+				<option value="1">Do not show on the sites below</option>
+			</select>
+		</div>
+
+		<div>
+			<div class="right">
+				<button id="removesite" disabled>Remove Selected Site</button>
+			</div>
+			<select id="sitelist" size="10">
+			</select>
+			<div class="right">
+				<input type="text" id="newsite">
+				<button id="addnewsite" disabled>Add Site</button>
+			</div>
+		</div>
+
+		<div>
+			<div id="status"></div>
+		</div>
+
+	</div>
+
+	<script src="options.js"></script>
+</body>
+</html>

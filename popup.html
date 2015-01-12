@@ -1,31 +1,33 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Getting Started Extension's Popup</title>
-    <style>
-      body {
-        min-width: 357px;
-        overflow-x: hidden;
-      }
+<head>
+ 	<style>
+		body {
+			font-family: Arial;
+			margin: 20px;
+		}
 
-      img {
-        margin: 5px;
-        border: 2px solid black;
-        vertical-align: middle;
-        width: 75px;
-        height: 75px;
-      }
-    </style>
+		.options-enable {
+			margin-bottom: 20px;
+		}
 
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
-     -->
-    <script src="popup.js"></script>
-  </head>
-  <body>
-  </body>
+		button#addsite {
+			background-color: #AF79FF;
+			padding: 10px;
+			border: 1px solid #6C4B9D;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body style="width: 200px">
+	<div class="options-enable">
+		<input id="enabled" type="checkbox">
+		<label for="enabled">Enable ChromeStrap</label>
+	</div>
+	<div>
+		<input type="hidden" id="currentLink"/>
+		<button id="addsite">Add this site</button>
+	</div>
+ 	<script src="popup.js"></script>
+</body>
 </html>
-
