@@ -1,7 +1,9 @@
 function saveOptions() {
     var enabled = document.getElementById('enabled').checked;
+    var popupenabled = document.getElementById('popupenabled').checked;
     var showtype = document.getElementById('showtype').value;
     var siteOptions = document.getElementById('sitelist').options;
+
     var sites = new Array();
     for (index = 0; index < siteOptions.length; ++index) {
         sites[index] = siteOptions[index].text;
@@ -9,6 +11,7 @@ function saveOptions() {
 
     chrome.storage.sync.set({
         enabled: enabled,
+        popupenabled: popupenabled,
         showtype: showtype,
         sites: sites
     }, function() {
@@ -28,9 +31,11 @@ function restoreOptions() {
     chrome.storage.sync.get({
         enabled: 'true',
         showtype: 0,
-        sites: defaultSites
+        sites: defaultSites,
+        popupenabled: 'true'
     }, function(items) {
         document.getElementById('enabled').checked = items.enabled;
+        document.getElementById('popupenabled').checked = items.popupenabled;
         document.getElementById('showtype').selectedIndex = items.showtype;
         var siteList = document.getElementById('sitelist');
         for(index = 0; index < items.sites.length; index++) {
@@ -77,6 +82,7 @@ function checkSiteSelected() {
 document.addEventListener('DOMContentLoaded', restoreOptions);
 
 document.getElementById('enabled').addEventListener('click', saveOptions);
+document.getElementById('popupenabled').addEventListener('click', saveOptions);
 document.getElementById('showtype').addEventListener('change', saveOptions);
 document.getElementById('addnewsite').addEventListener('click', addNewSite);
 document.getElementById('removesite').addEventListener('click', removeSite);

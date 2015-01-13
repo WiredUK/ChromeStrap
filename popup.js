@@ -1,8 +1,10 @@
 function saveOptions() {
     var enabled = document.getElementById('enabled').checked;
+    var popupenabled = document.getElementById('popupenabled').checked;
 
     chrome.storage.sync.set({
-        enabled: enabled
+        enabled: enabled,
+        popupenabled: popupenabled
     }, function() {
         setTimeout(function() {
             //Do something...
@@ -13,9 +15,11 @@ function saveOptions() {
 function restoreOptions() {
     chrome.storage.sync.get({
         enabled: 'true',
+        popupenabled: 'true',
         showtype: 0
     }, function(items) {
         document.getElementById('enabled').checked = items.enabled;
+        document.getElementById('popupenabled').checked = items.popupenabled;
         if(items.showtype == 0) {
             document.getElementById('addsite').innerText = "Add this site to whitelist";
         } else {
@@ -46,4 +50,5 @@ function addSite() {
 document.addEventListener('DOMContentLoaded', restoreOptions);
 
 document.getElementById('enabled').addEventListener('click', saveOptions);
+document.getElementById('popupenabled').addEventListener('click', saveOptions);
 document.getElementById('addsite').addEventListener('click', addSite);

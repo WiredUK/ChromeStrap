@@ -19,6 +19,7 @@ defaultSites[0] = "http://.*";
 
 chrome.storage.sync.get({
     enabled: 'true',
+    popupenabled: 'true',
     showtype: 0,
     sites: defaultSites
 }, function(items) {
@@ -42,17 +43,20 @@ function initChromeStrap() {
         var range = getBootstrapRange(bp);
         clearTimeout(timeout);
 
-        var message = '<div><strong>W:</strong> '+spec.width+'px</div>'+
-                      '<div><strong>H:</strong> '+spec.height+'px</div>'+
-                      '<div><strong>Break:</strong> '+bp+'</div>';
+        if(options.popupenabled) {
+            var message = '<div><strong>W:</strong> '+spec.width+'px</div>'+
+                          '<div><strong>H:</strong> '+spec.height+'px</div>'+
+                          '<div><strong>Break:</strong> '+bp+'</div>';
 
-        if(range!=null) {
-            message = message+'<div><strong>Range<a class="info" title="Assuming default Bootstrap settings">?</a>:</strong> '+range.min+'px - '+range.max+'px</div>';
+            if(range!=null) {
+                message = message+'<div><strong>Range<a class="info" title="Assuming default Bootstrap settings">?</a>:</strong> '+range.min+'px - '+range.max+'px</div>';
+            }
+
+            $('#bs-bp-notify .bs-bp-message').html(message);
+            $('#bs-bp-notify').stop().fadeIn("fast");
+            timeout = setTimeout(function() { $('#bs-bp-notify').stop().fadeOut("fast"); }, 2000);
         }
 
-        $('#bs-bp-notify .bs-bp-message').html(message);
-        $('#bs-bp-notify').stop().fadeIn("fast");
-        timeout = setTimeout(function() { $('#bs-bp-notify').stop().fadeOut("fast"); }, 2000);
         if(bp.length <= 4) {
             chrome.extension.sendMessage(bp);
         } else {
