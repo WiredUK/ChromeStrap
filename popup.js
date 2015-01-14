@@ -6,9 +6,7 @@ function saveOptions() {
         enabled: enabled,
         popupenabled: popupenabled
     }, function() {
-        setTimeout(function() {
-            //Do something...
-        }, 500);
+        chrome.tabs.executeScript(null, {code:"reloadOptions()"});
     });
 }
 

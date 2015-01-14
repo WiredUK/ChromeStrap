@@ -13,6 +13,7 @@ $style = '<style>'+
          '</style>';
  
 
+var timeout;
 var options;
 var defaultSites = new Array();
 defaultSites[0] = "http://.*";
@@ -27,7 +28,20 @@ chrome.storage.sync.get({
     initChromeStrap();
 });
 
+function reloadOptions() {
+    chrome.storage.sync.get({
+        enabled: 'true',
+        popupenabled: 'true',
+        showtype: 0,
+        sites: defaultSites
+    }, function(items) {
+        options = items;
+    });
+}
+
 function initChromeStrap() {
+    if(timeout) clearTimeout(timeout);
+
     if(!options || !options.enabled || !siteMatch(options.showtype, options.sites)) {
         return;
     }
@@ -35,34 +49,7 @@ function initChromeStrap() {
     $('body').append($popup);
     $('body').append($style);
      
-    var timeout;
-     
-    $(window).resize(function() {
-        var spec = viewport();
-        var bp = findBootstrapEnvironment();
-        var range = getBootstrapRange(bp);
-        clearTimeout(timeout);
-
-        if(options.popupenabled) {
-            var message = '<div><strong>W:</strong> '+spec.width+'px</div>'+
-                          '<div><strong>H:</strong> '+spec.height+'px</div>'+
-                          '<div><strong>Break:</strong> '+bp+'</div>';
-
-            if(range!=null) {
-                message = message+'<div><strong>Range<a class="info" title="Assuming default Bootstrap settings">?</a>:</strong> '+range.min+'px - '+range.max+'px</div>';
-            }
-
-            $('#bs-bp-notify .bs-bp-message').html(message);
-            $('#bs-bp-notify').stop().fadeIn("fast");
-            timeout = setTimeout(function() { $('#bs-bp-notify').stop().fadeOut("fast"); }, 2000);
-        }
-
-        if(bp.length <= 4) {
-            chrome.extension.sendMessage(bp);
-        } else {
-            chrome.extension.sendMessage("");
-        }
-    });
+    $(window).resize(runBootstrapCheck);
      
     $(".bs-bp-dismiss a").click(function() {
         $("#bs-bp-notify").stop().fadeOut("fast");
@@ -78,6 +65,37 @@ function initChromeStrap() {
         }
     );
 
+}
+
+function runBootstrapCheck() {
+    if(!options || !options.enabled || !siteMatch(options.showtype, options.sites)) {
+        return;
+    }
+
+    var spec = viewport();
+    var bp = findBootstrapEnvironment();
+    var range = getBootstrapRange(bp);
+    clearTimeout(timeout);
+
+    if(options.popupenabled) {
+        var message = '<div><strong>W:</strong> '+spec.width+'px</div>'+
+                      '<div><strong>H:</strong> '+spec.height+'px</div>'+
+                      '<div><strong>Break:</strong> '+bp+'</div>';
+
+        if(range!=null) {
+            message = message+'<div><strong>Range<a class="info" title="Assuming default Bootstrap settings">?</a>:</strong> '+range.min+'px - '+range.max+'px</div>';
+        }
+
+        $('#bs-bp-notify .bs-bp-message').html(message);
+        $('#bs-bp-notify').stop().fadeIn("fast");
+        timeout = setTimeout(function() { $('#bs-bp-notify').stop().fadeOut("fast"); }, 2000);
+    }
+
+    if(bp.length <= 4) {
+        chrome.extension.sendMessage(bp);
+    } else {
+        chrome.extension.sendMessage("");
+    }
 }
 
 function viewport() {
