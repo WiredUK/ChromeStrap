@@ -3,7 +3,7 @@
 
   "name": "ChromeStrap",
   "description": "Displays a popup window showing the current Bootstrap 3 breakpoint when resizing your browser window",
-  "version": "0.99",
+  "version": "1.0",
   "options_page": "options.html",
   "homepage_url": "https://github.com/WiredUK/ChromeStrap",
 
