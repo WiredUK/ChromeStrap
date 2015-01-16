@@ -1,17 +1,9 @@
-$popup = '<div id="bs-bp-notify" style="display: none;">'+
+var $popup = '<div id="bs-bp-notify" style="display: none;">'+
             '<span class="bs-bp-dismiss">'+
                 '<a title="Dismiss">x</a>'+
                 '<div class="bs-bp-message">message</div>'+
             '</span>'+
          '</div>';
-$style = '<style>'+
-             '#bs-bp-notify{position:fixed;bottom:0;right:0;margin:20px;padding:15px;padding-top:5px;padding-bottom:5px;color:#000000;background-color:#cccccc;border:1px solid #777777;border-radius:5px;text-align:left;font-family:monospace;font-size:12px;z-index:10000;box-shadow: -5px -5px 10px #777777;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default;}'+
-             '.bs-bp-dismiss>a{text-align:right;display:block;float:right;margin-right:-10px;margin-top:-5px;cursor:pointer;color:black;font-weight:700;}'+
-             '.bs-bp-dismiss>a:hover{text-decoration:none;}'+
-             '.bs-bp-message a.info{vertical-align:super;font-size:9px;cursor:help;}'+
-             '.bs-bp-message strong{font-weight:bold;}'+
-         '</style>';
- 
 
 var timeout;
 var options;
@@ -47,7 +39,6 @@ function initChromeStrap() {
     }
 
     $('body').append($popup);
-    $('body').append($style);
      
     $(window).resize(runBootstrapCheck);
      

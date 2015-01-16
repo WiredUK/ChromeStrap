@@ -17,8 +17,9 @@
   },
 
   "content_scripts": [ {
+    "matches": [ "http://*/*", "https://*/*"],
     "js": [ "jquery.min.js", "ChromeStrap.js" ],
-    "matches": [ "http://*/*", "https://*/*"]
+    "css": [ "ChromeStrap.css" ]
   }],
 
   "permissions": [
